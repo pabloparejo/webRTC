@@ -1,6 +1,6 @@
 // Get <div> placeholder element from DOM
 div = document.getElementById('scratchPad'); // Connect to server
-var socket = io.connect('http://localhost:8080'); // Ask channel name from user
+var socket = io.connect('http://169.254.43.93:8080'); // Ask channel name from user
 channel = prompt("Enter signaling channel name:");
 
 if (channel !== "") {

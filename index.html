@@ -1,11 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>WebRTC client</title>
+	<title>Very simple WebRTC application with a Node.js signaling server</title>
+	<link rel="stylesheet" href="main.css" />
 </head>
 <body>
-	<script src='/socket.io/socket.io.js'></script> <div id="scratchPad"></div>
-	<script type="text/javascript" src="js/simpleNodeClient.js"></script>
+
+	<section>
+		<article class="width50">
+			<div id="videos">
+				<video id="remoteVideo" autoplay></video>
+				<video id="localVideo" autoplay></video>
+			</div>
+			<form action="">
+				<input id="dataChannelSend" type="text" placeholder="Type some text here...">
+				<button id="sendButton" type="submit"> Send </button>
+			</form>
+		</article>
+		<article class="width50">
+			<div id="chat-window">
+				<ul id="chat-list" class="no-list-style">
+					<li>
+						<p class="message"></p>
+					</li>
+				</ul>
+			</div>
+		</article>
+	</section>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src='/socket.io/socket.io.js'></script>
+	<script src='js/lib/adapter.js'></script>
+	<script src='/js/code.js'></script>
+	<script src='js/completeNodeClientWithDataChannel.js'></script>
 </body>
 </html>
+
