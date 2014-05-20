@@ -15,8 +15,8 @@ window.onbeforeunload = function(e){
 
 // Data channel information
 var sendChannel, receiveChannel;
-var sendTextarea = document.getElementById("dataChannelSend");
-var receiveTextarea = document.getElementById("dataChannelReceive");
+
+var dataChannelSend = $('#dataChannelSend');
 
 // HTML5 <video> elements
 var localVideo = document.querySelector('#localVideo');
@@ -47,17 +47,19 @@ var pc_constraints = {
 ]};
 var sdpConstraints = {};
 
-// Let's get started: prompt user for input (room name)
-var room = prompt('Enter room name:');
+// Room is set with the login form - Pablo Parejo
+var room;
 
 // Connect to signaling server
 var socket = io.connect("http://localhost:8080");
 
 // Send 'Create or join' message to singnaling server
-if (room !== '') {
+// Changed start of signaling - Pablo Parejo
+function startSignaling(room){
 	console.log('Create or join room', room);
 	socket.emit('create or join', room);
 }
+
 
 // Set getUserMedia constraints
 var constraints = {video: true, audio: true};
@@ -195,21 +197,41 @@ function createPeerConnection() {
 	}
 }
 
+// ADDED - PABLO PAREJO
+var self_nick;
+var peer_nick;
+var nick_sent = false;
 
-// Data channel management
-function sendData() {
-	var data = $('#dataChannelSend').val();
+function sendNick(){
+	var data = {"content": self_nick,
+				"message_type": "nick"};
+	data = JSON.stringify(data);
 	if(isInitiator){
 		sendChannel.send(data);
 	} else {
 		receiveChannel.send(data);
 	}
+	nick_sent = true;
+}
+
+// Data channel management
+function sendData() {
+	var data = {'content': $('#dataChannelSend').val(),
+				'message_type': 'message'};
 
 	var $message_item = $('#chat-window ul').children().last().clone();
-	$message_item.find('p').text(data);
+	$message_item.find('p').text(data.content);
 	$message_item.find('p').addClass('self');
 	$('#chat-window ul').prepend($message_item);
 	$message_item.slideDown();
+
+	data = JSON.stringify(data);
+	if (isInitiator){
+		sendChannel.send(data);
+	} else {
+		receiveChannel.send(data);
+	}
+
 	trace('Sent data: ' + data);
 }
 
@@ -223,12 +245,31 @@ function gotReceiveChannel(event) {
 	receiveChannel.onclose = handleReceiveChannelStateChange;
 }
 
+// ADDED nick functionality
 function handleMessage(event) {
-	trace('Received message: ' + event.data);
-	var $message_item = $('#chat-window ul').children().last().clone();
-	$message_item.find('p').text(event.data);
-	$('#chat-window ul').prepend($message_item);
-	$message_item.slideDown();
+	var data = JSON.parse(event.data);
+	if (data.message_type == "nick"){
+		peer_nick = JSON.parse(event.data).content;
+		trace('Received peer nick: ' + peer_nick);
+		if (nick_sent == false){
+			sendNick();
+		}
+		var $info_item = $('#chat-window ul').children().last().clone();
+		$info_item.find('p').text(peer_nick + ' has joined the room ' + room);
+		$info_item.find('p').removeClass('message');
+		$info_item.find('p').addClass('info');
+		$('#chat-window ul').prepend($info_item);
+		$info_item.slideDown();
+	} else if (data.message_type == "message"){
+		trace('Received message: ' + data.content);
+		var $message_item = $('#chat-window ul').children().last().clone();
+		$message_item.find('p').text(data.content);
+		$('#chat-window ul').prepend($message_item);
+		$message_item.slideDown();
+	}else{
+		trace('Unknown message_type. Received: ' + event.data);
+	}
+
 }
 
 function handleSendChannelStateChange() {
@@ -239,6 +280,7 @@ function handleSendChannelStateChange() {
 		dataChannelSend.disabled = false;
 		dataChannelSend.focus();
 		dataChannelSend.placeholder = "";
+		sendNick();
 	} else {
 		dataChannelSend.disabled = true;
 	}

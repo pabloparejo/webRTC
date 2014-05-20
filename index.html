@@ -3,21 +3,30 @@
 <head>
 	<title>Very simple WebRTC application with a Node.js signaling server</title>
 	<link rel="stylesheet" href="main.css" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width"/>
 </head>
 <body>
-
-	<section>
-		<article class="width50">
+	<section id="channel-info">
+		<article> 
+		<h1 class="title">Welcome to WebRTC chat!</h1>
+		<form action="">
+			<p>Please, enter a room name and nick to chat</p>
+			<input id="roomName" type="text" placeholder="Room name" required="true" autofocus>
+			<input id="nickName" type="text" placeholder="Nickname" required="true">
+			<button id="loginButton" type="submit"> Login </button>
+		</form>
+		</article>
+	</section>
+	<section id="webrtc-ready">
+		<h1 class="title">WebRTC chat!</h1>
+		<article>
 			<div id="videos">
 				<video id="remoteVideo" autoplay></video>
 				<video id="localVideo" autoplay></video>
 			</div>
-			<form action="">
-				<input id="dataChannelSend" type="text" placeholder="Type some text here...">
-				<button id="sendButton" type="submit"> Send </button>
-			</form>
 		</article>
-		<article class="width50">
+		<article>
 			<div id="chat-window">
 				<ul id="chat-list" class="no-list-style">
 					<li>
@@ -25,6 +34,10 @@
 					</li>
 				</ul>
 			</div>
+			<form action="">
+				<button id="sendButton" type="submit"> Send </button>
+				<input id="dataChannelSend" type="text" placeholder="Type some text here..." autofocus>
+			</form>
 		</article>
 	</section>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

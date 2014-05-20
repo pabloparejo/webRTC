@@ -24,65 +24,100 @@
 
 body{
   background: #E4E4E4;
-  color: #115;
+  color: #116;
   font-family: "Open Sans";
   font-size: 16px;
 }
 
-button#sendButton{
-	background: #09C;
+button{
 	border: none;
-	border-bottom: 3px solid #115;
 	border-radius: 0.5em;
-	color: #115;
 	cursor: pointer;
-	float: right;
 	font-size: 1em;
-	margin-bottom: 1em;
+	margin: 0;
 	padding: 0.5em 1em;
 }
 
+button#sendButton{
+	background: #AEA;
+	border-bottom: 3px solid #393;
+	float: right;
+	margin-bottom: 1em;
+	margin-left: 0.25em;
+}
+
+button#sendButton:active{
+	border-bottom: 1px solid #065;
+	background: #ADA;
+}
+
+button:focus, button#sendButton:focus, button#sendButton:hover{
+	background: #9E9;
+	outline: none;
+}
+
 form{
-	background: #CCC;
 	margin: 1em 0em;
+	overflow: hidden;
+}
+
+
+h1{
+	margin: 1em auto;
+	font-size: 1.5em;
+	text-align: center;
+	width: 90%;
 }
 
 input#dataChannelSend{
+	background: #FAFAFA;
 	border-radius: 0.5em;
 	border: none;
+	border-bottom: 3px solid #BBB;
 	font-size: 1em;
-	padding: 1em;
-	width: 90%;
+	float: right;
+	padding: 0.5em;
+	width: 74%;
+}
+
+input:focus, input#dataChannelSend:focus {
+	background: #FFF !important;
+	outline: none;
 }
 
 div#chat-window{
 	background: #FAFAFA;
 	border-radius: 0.5em;
-	height: 400px;
+	height: 200px;
 	overflow: scroll;
+	padding: 0.5em 0.25em;
 }
 
 
 div#videos{
 	position: relative;
-	width: 50%;
 }
 
 p.message{
-	background: #BEB;
-	border: 1px solid #AEA;
+	background: #BDF;
+	border-bottom: 2px solid #35A;
 	border-radius: 0.5em;
 	float: left;
 	margin: 0.25em 1em;
-	padding: 0.3em 1.5em;
-	max-width: 40%;
+	padding: 0.3em 1em;
+	max-width: 45%;
 	overflow: hidden;
 }
 
 p.message.self{
-	background: #BDF;
-	border: 1px solid #ACF;
+	background: #BEB;
+	border-bottom: 2px solid #7B7;
 	float: right;
+}
+
+section#webrtc-ready article{
+	margin: 1em auto;
+	width: 90%;
 }
 
 ul#chat-list{
@@ -95,23 +130,126 @@ ul#chat-list li{
 	overflow: hidden;
 }
 
+ul#chat-list .info{
+	color: #777;
+	font-style: italic;
+	font-size: 0.9em;
+	text-align: center;
+}
+
+video{
+	border-radius: 0.5em;
+}
+
 video#localVideo{
-	border: 2px solid rgba(0,0,0,0.4);
-	bottom: 1em;
-	box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-	left: 1em;
-	min-width: 150px;
+	border: 1px solid rgba(0,0,0,0.3);
+	bottom: 0.5em;
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+	left: 0.5em;
+	min-width: 100px;
 	position: absolute;
 	width: 15%;
 }
 
 video#remoteVideo{
-	min-width: 400px;
-	width: 60%;
+	display: block;
+	margin: 0 auto;
+	min-width: 260px;
+	max-width: 500px;
+	width: 100%;
 }
 
-.width50{
-	display: inline-block;
+#channel-info article{
+	background: #FAFAFA;
+	margin: 4em auto;
 	padding: 1em;
-	width: 45%;
+	width: 75%;
 }
+
+#channel-info article form{
+	margin: 1em auto;
+	padding: 0.5em 1em;
+	width: 90%;
+}
+
+
+#channel-info article form button{
+	margin-right: 0.5em;
+}
+
+#channel-info article form input{
+	background: #EEE;
+	border: 0;
+	border-bottom: 2px solid #115;
+	border-radius: 0.5em;
+	display: block;
+	font-size: 1em;
+	padding: 0.5em 1em;
+	margin: 1em auto;
+	width: 80%;
+}
+
+#channel-info article form p{
+	margin: 0.5em auto;
+	text-align: center;
+	padding-bottom: 0.5em;
+	width: 80%;
+}
+
+#channel-info article form #loginButton{
+	background: #9E9;
+	border-bottom: 3px solid #393;
+	color: #116;
+	display: block;
+	margin: 0.5em auto;
+}
+
+#channel-info article form #loginButton:active{
+	background: #6D6;
+	border-bottom: 1px solid #393;
+} 
+
+#channel-info article form #loginButton:hover{
+	background: #6D6;
+}
+
+@media only screen and (min-width:800px){
+
+	div#chat-window{
+		height: 342px;
+		padding: 1em;
+	}
+
+	section{
+		padding-top: 2em;
+	}
+
+	section#channel-info form{
+		width: 500px;
+	}
+
+	section#webrtc-ready article{
+		display: inline-block;
+		margin: 0.5em;
+		vertical-align: top;
+		width: 47%;
+	}
+
+	video#localVideo{
+		width: 25%;
+		left: 2em;
+	}
+}
+
+
+@media only screen and (min-width:1100px){
+
+	video#localVideo{
+		left: 4em;
+	}
+
+}
+
+
+
+
