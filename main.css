@@ -76,6 +76,7 @@ input#dataChannelSend{
 	border-bottom: 3px solid #BBB;
 	font-size: 1em;
 	float: right;
+	margin: 0;
 	padding: 0.5em;
 	width: 74%;
 }
@@ -87,6 +88,7 @@ input:focus, input#dataChannelSend:focus {
 
 div#chat-window{
 	background: #FAFAFA;
+	border: 0.25em solid #EFEFEF;
 	border-radius: 0.5em;
 	height: 200px;
 	overflow: scroll;
@@ -103,7 +105,7 @@ p.message{
 	border-bottom: 2px solid #35A;
 	border-radius: 0.5em;
 	float: left;
-	margin: 0.25em 1em;
+	margin: 0em 1em 0.5em 1em;
 	padding: 0.3em 1em;
 	max-width: 45%;
 	overflow: hidden;
@@ -134,6 +136,7 @@ ul#chat-list .info{
 	color: #777;
 	font-style: italic;
 	font-size: 0.9em;
+	margin: 0.25em ;
 	text-align: center;
 }
 
@@ -213,6 +216,22 @@ video#remoteVideo{
 	background: #6D6;
 }
 
+.blue{
+	color: #3369E8;
+}
+
+.green{
+	color: #009925;
+}
+
+.red{
+	color:  #D50F25;
+}
+
+.yellow{
+	color: #EEB211;
+}
+
 @media only screen and (min-width:800px){
 
 	div#chat-window{
@@ -221,7 +240,7 @@ video#remoteVideo{
 	}
 
 	section{
-		padding-top: 2em;
+		padding: 2em 0;
 	}
 
 	section#channel-info form{
@@ -245,11 +264,18 @@ video#remoteVideo{
 @media only screen and (min-width:1100px){
 
 	video#localVideo{
-		left: 4em;
+		left: 2.25em;
+		bottom: 0.25em;
 	}
 
 }
 
+@media only screen and (min-width:1300px){
+	section{
+		margin: 2em auto;
+		width: 1200px;
+	}
+}
 
 
 
