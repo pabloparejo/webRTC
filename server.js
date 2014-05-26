@@ -8,7 +8,7 @@ var file = new(static.Server)();
 
 var app = http.createServer(function (req, res) {
 	file.serve(req, res);
-}).listen(8080);
+}).listen(8080,'127.0.0.1');
 
 // Use socket.io JavaScript library for real-time web applications
 var io = require('socket.io').listen(app); // Let's start managing connections...
@@ -28,10 +28,12 @@ io.sockets.on('connection', function (socket){
 		log('S --> Request to create or join room', room);
 		// First client joining...
 		if (numClients == 0){ 
-			socket.join(room); socket.emit('created', room);
+			socket.join(room);
+			socket.emit('created', room);
 		} else if (numClients == 1) { // Second client joining...
 			io.sockets.in(room).emit('join', room); 
-			socket.join(room); socket.emit('joined', room);
+			socket.join(room); 
+			socket.emit('joined', room);
 		} else { // max two clients 
 			socket.emit('full', room);
 		} 

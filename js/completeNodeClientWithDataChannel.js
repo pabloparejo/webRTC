@@ -72,6 +72,7 @@ function handleUserMedia(stream) {
 	console.log('Adding local stream.');
 	sendMessage('got user media');
 }
+
 function handleUserMediaError(error){
 	console.log('navigator.getUserMedia error: ', error);
 }
@@ -128,9 +129,9 @@ socket.on('message', function (message){
 	} else if (message.type === 'offer') {
 		if (!isInitiator && !isStarted) {
 			checkAndStart();
-	}
-	pc.setRemoteDescription(new RTCSessionDescription(message));
-	doAnswer();
+		}
+		pc.setRemoteDescription(new RTCSessionDescription(message));
+		doAnswer();
 	} else if (message.type === 'answer' && isStarted) {
 		pc.setRemoteDescription(new RTCSessionDescription(message));
 	} else if (message.type === 'candidate' && isStarted) {
