@@ -38,6 +38,13 @@ button{
 	padding: 0.5em 1em;
 }
 
+button:disabled{
+	background: #BBB !important;
+	border-bottom: 3px solid #888 !important;
+	color: #666 !important;
+	cursor: default !important;
+}
+
 button#sendButton{
 	background: #AEA;
 	border-bottom: 3px solid #393;
@@ -46,7 +53,7 @@ button#sendButton{
 	margin-left: 0.25em;
 }
 
-button#sendButton:active{
+button#sendButton:enabled:active{
 	border-bottom: 1px solid #065;
 	background: #ADA;
 }
@@ -207,7 +214,7 @@ video#remoteVideo{
 	margin: 0.5em auto;
 }
 
-#channel-info article form #loginButton:active{
+#channel-info article form #loginButton:enabled:active{
 	background: #6D6;
 	border-bottom: 1px solid #393;
 } 

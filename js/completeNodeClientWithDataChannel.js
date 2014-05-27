@@ -207,6 +207,7 @@ function sendNick(){
 	var data = {"content": self_nick,
 				"message_type": "nick"};
 	data = JSON.stringify(data);
+	console.log(data);
 	if(isInitiator){
 		sendChannel.send(data);
 	} else {
@@ -216,6 +217,7 @@ function sendNick(){
 }
 
 // Data channel management
+// MODIFIED - PABLO PAREJO
 function sendData() {
 	var data = {'content': $('#dataChannelSend').val(),
 				'message_type': 'message'};
@@ -278,12 +280,19 @@ function handleSendChannelStateChange() {
 	trace('Send channel state is: ' + readyState);
 	// If channel ready, enable user's input
 	if (readyState == "open") {
-		dataChannelSend.disabled = false;
+		dataChannelSend.removeAttr('disabled');
 		dataChannelSend.focus();
-		dataChannelSend.placeholder = "";
+		$('#sendButton').removeAttr('disabled');
 		sendNick();
 	} else {
-		dataChannelSend.disabled = true;
+		dataChannelSend.attr('disabled', 'true');
+		$('#sendButton').attr('disabled', 'true');
+		var $info_item = $('#chat-window ul').children().last().clone();
+		$info_item.find('p').text(peer_nick + ' has left the room ');
+		$info_item.find('p').removeClass('message');
+		$info_item.find('p').addClass('info');
+		$('#chat-window ul').prepend($info_item);
+		$info_item.slideDown();
 	}
 }
 
@@ -292,11 +301,18 @@ function handleReceiveChannelStateChange() {
 	trace('Receive channel state is: ' + readyState);
 	// If channel ready, enable user's input
 	if (readyState == "open") {
-		dataChannelSend.disabled = false;
+		dataChannelSend.removeAttr('disabled');
 		dataChannelSend.focus();
-		dataChannelSend.placeholder = "";
+		$('#sendButton').removeAttr('disabled');
 	} else {
-		dataChannelSend.disabled = true;
+		dataChannelSend.attr('disabled', 'true');
+		$('#sendButton').attr('disabled', 'true');
+		var $info_item = $('#chat-window ul').children().last().clone();
+		$info_item.find('p').text(peer_nick + ' has left the room ');
+		$info_item.find('p').removeClass('message');
+		$info_item.find('p').addClass('info');
+		$('#chat-window ul').prepend($info_item);
+		$info_item.slideDown();
 	}
 }
 
